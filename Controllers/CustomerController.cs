@@ -45,4 +45,11 @@ public class CustomerController : Controller
         var jsonValues = JsonConvert.SerializeObject(value);
         return Json(jsonValues);
     }
+
+    public IActionResult UpdateCustomer(Customer customer)
+    {
+        _context.Customers.Update(customer);
+        _context.SaveChanges();
+        return NoContent();
+    }
 }

@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+
+<br />
+
+<button class="btn btn-primary" id="btnList">Müşteri Listesi</button>
+<button class="btn btn-success" id="btnAdd">Müşteri Ekle</button>
+<button class="btn btn-danger" id="btnDelete">Müşteri Sil</button>
+<button class="btn btn-info" id="btnUpdate">Müşteri Güncelle</button>
+<button class="btn btn-dark" id="btnGet">Müşteri Getir</button>
+
+<hr />
+<script>
+    // Sayfa tamamen yüklendikten sonra çalıştır
+    $(document).ready(function () {
+        $("#btnList").click(function () {
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                type: "GET",
+                url: "/Customer/CustomerList/",
+                success: function (funk1) {
+                    let customers = jQuery.parseJSON(funk1);
+                    console.log(customers);
+                }
+            });
+        });
+    });
+</script>

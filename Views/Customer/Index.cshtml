@@ -17,6 +17,21 @@
 <button class="btn btn-dark" id="btnGet">Müşteri Getir</button>
 
 <hr />
+
+<div class="alert alert-secondary">Müşteri Listesi</div>
+<div id="Customerlist">
+
+</div>
+
+<div>
+    <div class="alert alert-info">Yeni Müşteri Girişi</div>
+    <input type="text" class="form-control" id="txtcustomername"  placeholder="Müşteri Adı"/>
+    <br />
+    <input type="text" class="form-control" id="txtcustomersurname" placeholder="Müşteri Soyadı" />
+    <br />
+   
+</div>
+
 <script>
     // Sayfa tamamen yüklendikten sonra çalıştır
     $(document).ready(function () {
@@ -29,8 +44,32 @@
                 success: function (funk1) {
                     let customers = jQuery.parseJSON(funk1);
                     console.log(customers);
+
+                    let tablehtml="<table class=table table-bordered>"
+                    +"<tr>"
+                    +"<th>Müşteri Id</th>"
+                    +"<th>Müşteri Adı</th>"
+                    +"<th>Müşteri Soyadı</th>"
+                    +"</tr>"
+                    $.each(customers, (index, value) => {
+                        tablehtml += `<tr>`
+                            + `<td>${value.CustomerId}</td>`
+                            + `<td>${value.CustomerName}</td>`
+                            + `<td>${value.CustomerSurname}</td>`
+                            + `</tr>`
+                    });
+                    tablehtml += "</table>";
+                    $("#Customerlist").html(tablehtml);
+
                 }
             });
         });
     });
+
+    $(document).ready(function () {
+        $("#btnAdd").click(function () {
+
+        })
+    })
+
 </script>

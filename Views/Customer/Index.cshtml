@@ -24,12 +24,40 @@
 </div>
 
 <div>
+    <div class="alert alert-light">ID'ye Göre Müşteri Bilgisi Getirme</div>
+    <input type="text" class="form-control" id="txtGetId" placeholder="Bilgileri Getirilecek Müşteri Id" />
+    <br />
+</div>
+
+
+<div>
+
     <div class="alert alert-info">Yeni Müşteri Girişi</div>
     <input type="text" class="form-control" id="txtcustomername"  placeholder="Müşteri Adı"/>
     <br />
     <input type="text" class="form-control" id="txtcustomersurname" placeholder="Müşteri Soyadı" />
     <br />
    
+</div>
+
+<div>
+
+    <div class="alert alert-danger"> Müşteri Silme</div>
+    <input type="text" class="form-control" id="txtcustomerid" placeholder="Silinecek Müşteri Id" />
+    <br />
+
+</div>
+
+<div>
+
+    <div class="alert alert-primary"> Müşteri Güncelleme Alanı</div>
+    <input type="text" class="form-control" id="txteditcustomerid" placeholder="Güncellenecek Müşteri Id" />
+    <br />
+    <input type="text" class="form-control" id="txteditcustomername" placeholder="Güncellenecek Müşteri Adı" />
+    <br />
+    <input type="text" class="form-control" id="txteditcustomersurname" placeholder="Güncellenecek Müşteri Soyadı" />
+    <br />
+
 </div>
 
 <script>
@@ -68,8 +96,68 @@
 
     $(document).ready(function () {
         $("#btnAdd").click(function () {
+            let customervalues = { //müsterinin adını soyadını aldık.
+                CustomerName: $("#txtcustomername").val(),
+                CustomerSurname: $("#txtcustomersurname").val()
+            };
 
-        })
+            $.ajax({
+                type: "post",
+                url: "/Customer/CustomerCreate/",
+                data: customervalues,
+                success: function (funk2) {
+                    let result = jQuery.parseJSON(funk2);
+                    alert("EKleme işlemi yapıldı.");
+                }
+            });
+
+        });
+    })
+
+    $(document).ready(function () {
+        $("#btnDelete").click(function () {
+            let id = $("#txtcustomerid").val();
+            $.ajax({
+                url: "/Customer/CustomerDelete/" + id,
+                success: function (funk3) {
+                    alert("Müsteri Silindi");
+                }
+            });
+        });
+    })
+
+    $(document).ready(function () {
+        $("#btnUpdate").click(function () {
+            let values = {
+                CustomerId: $("#txteditcustomerid").val(),
+                CustomerName: $("#txteditcustomername").val(),
+                CustomerSurName: $("#txteditcustomersurname").val()
+
+            };
+            $.ajax({
+                url: "/Customer/UpdateCustomer/",
+                data: values,
+                success: function (funk4) {
+                    alert("Başarıyla Güncellendi.");
+                }
+            });
+        });
+    })
+
+    $(document).ready(function () {
+        $("#btnGet").click(function () {
+            let id = $("#txtGetId").val();
+            $.ajax({
+                contentType: "application/json",
+                dataType: "json",
+                url: "/Customer/GetCustomer/" + id,
+                success: function (funk5) {
+                    let result = jQuery.parseJSON(funk5);
+                    console.log(result);
+                    // alert("Id'ye Göre Müşteri Bilgileri Getirildi");
+                }
+            });
+        });
     })
 
 </script>
